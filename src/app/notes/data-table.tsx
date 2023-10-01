@@ -3,12 +3,14 @@
 import * as React from "react"
 
 import { Button } from "@/components/ui/button"
-
+import { Input } from "@/components/ui/input"
 import {
   ColumnDef,
+  ColumnFiltersState,
   SortingState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
@@ -33,21 +35,41 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  )
+  const [rowSelection, setRowSelection] = React.useState({})
 
   const table = useReactTable({
     data,
     columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
+      columnFilters,
+      rowSelection,
     },
   })
 
   return (
     <div>
+      <div className="flex my-4 place-items-center">
+        <div className="text-2xl font-thin mr-4">solace notes</div>
+        <Input
+          placeholder="Filter notes..."
+          value={(table.getColumn("note")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("note")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm "
+        />
+      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -60,7 +82,7 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   )
@@ -79,7 +101,7 @@ export function DataTable<TData, TValue>({
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

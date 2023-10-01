@@ -6,7 +6,7 @@ import { DataTable } from "./notes/data-table"
 import { Note, columns } from "./notes/columns"
 
 export default function Home() {
-  const [notes, setNotes] = useState<any[]>([])
+  const [notes, setNotes] = useState<Note[]>([])
 
   const supabase = createClientComponentClient()
 
@@ -22,13 +22,6 @@ export default function Home() {
 
   return (
     <div className="m-8">
-      <div className="text-3xl font-thin">notes</div>
-      {notes.map((note: Note) => (
-        <div key={note.id}>{note.note}</div>
-      ))}
-
-      <div>table...</div>
-
       <DataTable columns={columns} data={notes} />
     </div>
   )
