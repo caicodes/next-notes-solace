@@ -8,6 +8,9 @@ dependencies:
   '@hookform/resolvers':
     specifier: ^3.3.1
     version: 3.3.1(react-hook-form@7.46.2)
+  '@next/font':
+    specifier: ^13.5.3
+    version: 13.5.3
   '@radix-ui/react-checkbox':
     specifier: ^1.0.4
     version: 1.0.4(@types/react-dom@18.2.8)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
@@ -245,6 +248,10 @@ packages:
     dependencies:
       glob: 7.1.7
     dev: true
+
+  /@next/font@13.5.3:
+    resolution: {integrity: sha512-RniL8BuXLCtBU1chuJ/TPVT2vCA6+EdlOUEhCpMdSeInZ5/nuOShkHgLZ0QnFVbcozwK3shO5ZdqKBI5G3eMNg==}
+    dev: false
 
   /@next/swc-darwin-arm64@13.5.3:
     resolution: {integrity: sha512-6hiYNJxJmyYvvKGrVThzo4nTcqvqUTA/JvKim7Auaj33NexDqSNwN5YrrQu+QhZJCIpv2tULSHt+lf+rUflLSw==}

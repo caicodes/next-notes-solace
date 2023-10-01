@@ -59,15 +59,15 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex my-4 place-items-center">
-        <div className="text-2xl font-thin mr-4">solace notes</div>
+      <div className="flex  p-4 place-items-center">
+        <div className="text-2xl font-thin font-display mr-4">Solace Notes</div>
         <Input
           placeholder="Filter notes..."
           value={(table.getColumn("note")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("note")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm "
+          className="max-w-sm"
         />
       </div>
       <div className="rounded-md border">
