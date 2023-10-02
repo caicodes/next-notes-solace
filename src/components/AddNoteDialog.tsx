@@ -7,7 +7,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Dialog,
   DialogContent,
@@ -20,6 +20,7 @@ import { PlusIcon } from "lucide-react"
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -81,7 +82,6 @@ export function AddNoteDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        {/* add note form  */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -91,9 +91,19 @@ export function AddNoteDialog() {
                 <FormItem>
                   <FormLabel>Note</FormLabel>
                   <FormControl>
-                    <Input placeholder="Add a note..." {...field} />
+                    <Textarea
+                      placeholder="Add a note..."
+                      {...field}
+                      maxLength={300}
+                    />
                   </FormControl>
                   <FormMessage />
+                  <FormDescription className="text-right text-xs opacity-60">
+                    {form.watch("note")
+                      ? 300 - form.watch("note").length
+                      : "300"}{" "}
+                    Characters remaining
+                  </FormDescription>
                 </FormItem>
               )}
             />
