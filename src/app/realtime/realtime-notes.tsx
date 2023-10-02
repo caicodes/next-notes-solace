@@ -27,11 +27,12 @@ export default function RealtimeNotes({
         },
         (payload) => {
           console.log({ payload })
-          if (payload.eventType === "INSERT")
+          if (payload.eventType === "INSERT") {
             setNotes([...notes, payload.new as Note])
-          toast({
-            title: "New note added...",
-          })
+            toast({
+              title: "New note added...",
+            })
+          }
           if (
             payload.eventType === "DELETE" ||
             payload.eventType === "UPDATE"
