@@ -5,20 +5,29 @@ import { useEffect, useState } from "react"
 import { DataTable } from "./notes/data-table"
 import { Note, columns } from "./notes/columns"
 
-export default function Home() {
+export default function Home({ serverNotes }: { serverNotes: any }) {
   const [notes, setNotes] = useState<Note[]>([])
 
   const supabase = createClientComponentClient()
 
   useEffect(() => {
-    const getNotes = async () => {
-      const { data } = await supabase.from("notes").select()
-      if (data) {
-        setNotes(data)
-      }
+    setNotes(serverNotes)
+  }, [serverNotes])
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("*")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "notes" },
+        (payload) => setNotes((notes: any) => [...notes, payload.new]),
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
     }
-    getNotes()
-  }, [supabase, setNotes])
+  }, [supabase, serverNotes])
 
   return (
     <div className="m-8">
@@ -26,3 +35,4 @@ export default function Home() {
     </div>
   )
 }
+

@@ -24,6 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { AddNoteDialog } from "@/components/AddNoteDialog"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -58,17 +59,22 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div>
-      <div className="flex  p-4 place-items-center">
-        <div className="text-2xl font-thin font-display mr-4">Solace Notes</div>
-        <Input
-          placeholder="Filter notes..."
-          value={(table.getColumn("note")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("note")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+    <div className="animate-in">
+      <div className="flex py-4 justify-between">
+        <div className="flex place-items-center w-1/2">
+          <div className="text-2xl font-thin font-display mx-4">
+            Solace Notes
+          </div>
+          <Input
+            placeholder="Filter notes..."
+            value={(table.getColumn("note")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("note")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        </div>
+        <AddNoteDialog />
       </div>
       <div className="rounded-md border">
         <Table>
