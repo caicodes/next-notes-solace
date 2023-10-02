@@ -5,7 +5,6 @@ import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { toast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import {
@@ -54,16 +53,8 @@ export function AddNoteDialog() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // ✅ This will be type-safe and validated.
     await supabase.from("notes").insert(values)
-
-    toast({
-      title: "You submitted the following:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      ),
-    })
     console.log(values)
+    form.reset()
     setOpen(false)
   }
 
@@ -107,8 +98,9 @@ export function AddNoteDialog() {
                 </FormItem>
               )}
             />
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-2">
               <Button
+                variant={"outline"}
                 type="reset"
                 onClick={() => {
                   form.clearErrors()
