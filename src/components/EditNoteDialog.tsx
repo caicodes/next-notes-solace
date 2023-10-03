@@ -44,8 +44,6 @@ export function EditNoteDialog(note: Note) {
 
   const supabase = createClientComponentClient()
 
-  console.log("noteId: ", note.id)
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
