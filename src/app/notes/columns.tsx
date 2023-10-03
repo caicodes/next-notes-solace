@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { EditNoteDialog } from "@/components/EditNoteDialog"
+import DeleteNoteButton from "@/components/DeleteNoteButton"
 
 // This type is used to define the shape of the notes data.
 export type Note = {
@@ -114,25 +115,7 @@ export const columns: ColumnDef<Note>[] = [
       return (
         <div className="flex justify-end">
           <EditNoteDialog {...note} />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(note.id)}
-              >
-                Delete note {note.id}
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>View note</DropdownMenuItem>
-              <DropdownMenuItem>View note details</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <DeleteNoteButton {...note} />
         </div>
       )
     },

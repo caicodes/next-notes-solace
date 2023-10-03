@@ -88,12 +88,13 @@ export function DataTable<TData, TValue>({
             Solace Notes
           </div>
           <Input
-            placeholder="Filter notes..."
+            placeholder="Search notes..."
             value={(table.getColumn("note")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("note")?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
+            type="search"
           />
         </div>
         <AddNoteDialog />

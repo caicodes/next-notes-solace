@@ -68,8 +68,8 @@ export function EditNoteDialog(note: Note) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">
-          <PencilIcon className="mr-1 p-1" /> Edit Note
+        <Button variant="ghost" size="icon">
+          <PencilIcon className="mr-1 p-1" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -116,7 +116,7 @@ export function EditNoteDialog(note: Note) {
               >
                 Cancel
               </Button>
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Update</Button>
             </div>
           </form>
         </Form>
