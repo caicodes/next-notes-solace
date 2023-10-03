@@ -23,7 +23,7 @@ The deliverable out of this is a link to a Github repo, whatever documentation y
 
 ## The Solution
 
-The soluction is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). 
+The solution is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). 
 
 This project uses [Supabase](https://supabase.com/) as a serverless backend for data persistence to a Postgres database with Realtime data syncronization between client and server.
 > See video below for realtime updates on the client from server updates...
