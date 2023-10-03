@@ -113,7 +113,7 @@ Below is a Demo Video illustrating this feature as well as the source code for t
 
 In this video, I will make inserts, updates, and deletes on the server within Supabase with a tab open showing the client realtime response via the deployed application on Vercel.
 
-> video here...
+https://github.com/caicodes/next-notes-solace/assets/83988734/4df2b1cf-0794-4cd1-92b2-f0947fef0584
 
 
 realtime-notes.tsx source code below:
