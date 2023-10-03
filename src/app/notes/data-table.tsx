@@ -59,8 +59,6 @@ export function DataTable<TData, TValue>({
 
   function deleteSelectedRows(rows: SelectedNotes[]) {
     rows.forEach((element) => {
-      console.log("element", element)
-      console.log("rowSelection", rowSelection)
       deleteNote(element.id, element.original.id)
     })
   }

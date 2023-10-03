@@ -51,9 +51,8 @@ export function AddNoteDialog() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // ✅ This will be type-safe and validated.
+    // ✅ Type-safe and validated.
     await supabase.from("notes").insert(values)
-    console.log(values)
     form.reset()
     setOpen(false)
   }
