@@ -1,6 +1,6 @@
-b# Solace Notes Applicaiton
+# Solace Notes Applicaiton
 
-> This is my custom crafted solution for the Solace Assignment/Challenge to demostrate my coding practices, ability to follow directions, and ability to deliver a full stack solution to the presented challenge as describe below. I hope you enjoy and I truly appreciate your time and consideration to my canidacy for this role.
+> This is my custom crafted solution for the Solace Assignment/Challenge to demostrate my coding practices, ability to follow directions, and ultimately my ability to deliver a full stack solution to the presented challenge as described below. I hope you enjoy and I truly appreciate your time and consideration for my canidacy to this role with Solace.
 > 
 > Sincerly,
 > 
