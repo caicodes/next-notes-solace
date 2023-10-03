@@ -6,7 +6,7 @@
 > 
 > Cai Toy
 
-
+[Solace Notes Application Live Demo](https://solacenotes.vercel.app/)
 ## Goal: 
 The deliverable out of this is a link to a Github repo, whatever documentation you might think would be helpful and a working web app hosted somewhere publicly accessible.
 
@@ -90,10 +90,98 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to run the
 
 ## Deploy the Application on Vercel
 
-This app is deployed to the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This app is deployed to the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) on this url: 
+https://solacenotes.vercel.app/
 
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details or use the Deploy Button below to Clone and Deploy this application to Vercel.
 
-> Note: You will need to setup a Project in your Dashboard in Vercel, link to a repository, and enter the ENVIRONMENT VARIABLES within your Vercel Project Settings to setup build hooks and deploy successfully to the Vercel Platform.
+## Deploy Your Own Instance of this Application
+
+Use the button below to clone this repository and deploy it to Vercel.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fcaicodes%2Ftest-notes-solace&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY&envDescription=Supabase%20Environment%20Variables%20for%20this%20Application&envLink=https%3A%2F%2Fapp.supabase.com%2Fproject%2F_%2Fsettings%2Fapi&demo-title=Solace%20Notes%20Application%20by%20Cai%20Toy&demo-description=Next.js%20and%20Supabase%20Notes%20Application%20per%20Solace%20Assignment&demo-url=https%3A%2F%2Fsolacenotes.vercel.app%2F)
+
+> Note: You will be prompted to Configure Project in Vercel by entering the ENVIRONMENT VARIABLES required for the Supabase Integration. You can use the keys found here or enter your own if you have setup a Supabase project and seeded the database per the instructions above.
+
+## Bonus Feature
+
+As a bonus feature, Realtime Database updates are configured for this project and integrated so that updates on the server will instantly be pushed to the client via a subscription in this app.  You can view the code for that integration in `app/realtime/realtime-notes.tsx` 
+
+Below is a Demo Video illustrating this feature as well as the source code for this implementation.
+
+### Quicktime Video Demo
+
+In this video, I will make inserts, updates, and deletes on the server within Supabase with a tab open showing the client realtime response via the deployed application on Vercel.
+
+> video here...
 
 
+realtime-notes.tsx source code below:
+```javascript
+"use client"
+
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { useEffect, useState } from "react"
+import { DataTable } from "@/app/notes/data-table"
+import { Note, columns } from "@/app/notes/columns"
+import { toast } from "@/components/ui/use-toast"
+
+export default function RealtimeNotes({
+  serverNotes,
+}: {
+  serverNotes: Note[]
+}) {
+  const [notes, setNotes] = useState(serverNotes)
+
+  const supabase = createClientComponentClient()
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime notes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "notes",
+        },
+        (payload) => {
+          console.log({ payload })
+          if (payload.eventType === "INSERT") {
+            setNotes([...notes, payload.new as Note])
+            toast({
+              title: "New note added...",
+            })
+          }
+          if (
+            payload.eventType === "DELETE" ||
+            payload.eventType === "UPDATE"
+          ) {
+            getNotes()
+            toast({
+              title: `Note ${
+                payload.eventType === "DELETE" ? "deleted" : "updated"
+              } on server...`,
+            })
+          }
+        },
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+
+    async function getNotes() {
+      const { data } = await supabase.from("notes").select()
+      if (data) setNotes(data)
+    }
+  }, [notes, setNotes, serverNotes, supabase])
+
+  return (
+    <div className="m-4">
+      <DataTable columns={columns} data={notes} />
+    </div>
+  )
+}
+```
