@@ -115,6 +115,7 @@ In this video, I will make inserts, updates, and deletes on the server within Su
 
 https://github.com/caicodes/next-notes-solace/assets/83988734/4df2b1cf-0794-4cd1-92b2-f0947fef0584
 
+[Higher Quality Version of the Video](https://solacenotes.vercel.app/REALTIME_NOTES.mp4)
 
 realtime-notes.tsx source code below:
 ```javascript
