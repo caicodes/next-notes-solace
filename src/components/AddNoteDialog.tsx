@@ -16,6 +16,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+
 import {
   Form,
   FormControl,
@@ -26,6 +27,14 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 const formSchema = z.object({
   note: z
     .string()
@@ -35,6 +44,7 @@ const formSchema = z.object({
     .max(300, {
       message: "A note must be less than or equal to 300 characters.",
     }),
+  client_id: z.string(),
 })
 
 // AddNoteDialog
@@ -47,12 +57,14 @@ export function AddNoteDialog() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       note: "",
+      client_id: "",
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // ✅ Type-safe and validated.
     await supabase.from("notes").insert(values)
+    console.log(values)
     form.reset()
     setOpen(false)
   }
@@ -76,10 +88,41 @@ export function AddNoteDialog() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
+              name="client_id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Client</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a client for this note" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="5d904c4a-105f-40ae-84a4-5ad49477f527">
+                        Aquaman
+                      </SelectItem>
+                      <SelectItem value="9c551c16-098e-40a0-ac71-9766ebbbc533">
+                        Batman
+                      </SelectItem>
+                      <SelectItem value="17744141-773c-4f10-9f76-71fac04607b4">
+                        Superman
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="note"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Note</FormLabel>
+
                   <FormControl>
                     <Textarea
                       placeholder="Add a note..."

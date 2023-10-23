@@ -23,6 +23,7 @@ export type Note = {
   id: string
   note: string
   created_at: string
+  client_id: string
 }
 
 export const columns: ColumnDef<Note>[] = [
@@ -54,6 +55,20 @@ export const columns: ColumnDef<Note>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Note
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  },
+  {
+    accessorKey: "client_id",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Client
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )

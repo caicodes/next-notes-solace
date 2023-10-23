@@ -27,6 +27,14 @@ import {
 import { AddNoteDialog } from "@/components/AddNoteDialog"
 import { Trash2 } from "lucide-react"
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -96,6 +104,31 @@ export function DataTable<TData, TValue>({
             className="max-w-sm"
             type="search"
           />
+
+          <Select
+            value={
+              (table.getColumn("client_id")?.getFilterValue() as string) ?? ""
+            }
+            onValueChange={
+              (event) => table.getColumn("client_id")?.setFilterValue(event)
+              // console.log("event", event)
+            }
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select a client" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="5d904c4a-105f-40ae-84a4-5ad49477f527">
+                Aquaman
+              </SelectItem>
+              <SelectItem value="9c551c16-098e-40a0-ac71-9766ebbbc533">
+                Batman
+              </SelectItem>
+              <SelectItem value="17744141-773c-4f10-9f76-71fac04607b4">
+                Superman
+              </SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <AddNoteDialog />
       </div>
